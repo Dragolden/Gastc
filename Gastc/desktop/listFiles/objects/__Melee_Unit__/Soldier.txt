@@ -1,0 +1,8 @@
+Soldier
+true
+100
+3
+2
+1.
+1.
+Sword

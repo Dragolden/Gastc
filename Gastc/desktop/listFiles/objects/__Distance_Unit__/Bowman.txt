@@ -1,0 +1,8 @@
+Bowman
+true
+50
+1
+4
+0.5
+2
+Bow

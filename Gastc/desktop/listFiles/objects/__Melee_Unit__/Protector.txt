@@ -1,0 +1,8 @@
+Protector
+true
+250
+5
+2
+1.5
+2.5
+Sword
