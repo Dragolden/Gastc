@@ -70,10 +70,10 @@ public class __Team__ {
 					return false;
 				}
 				else if (_ListTeam_[i][l] == Joueur2)
-				{
+				{		
 					for (int j=l+1 ; j<_ListTeam_[i].length ; j++)
 					{
-						if (_ListTeam_[i][l] == Joueur1)
+						if (_ListTeam_[i][j] == Joueur1)
 						{
 							return true;
 						}
@@ -85,11 +85,41 @@ public class __Team__ {
 		return false;
 	}
 	
+	public boolean isInTeam(byte Team, byte Player)
+	{
+		for (int i=0 ; i<_ListTeam_[Team].length ; i++)
+		{
+			if (_ListTeam_[Team][i] == Player)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	//		- Accesseurs -
 	
 	//	|Getter
 	
-	/* Nothing Here */
+	public int getAmountTeam()
+	{
+		return _ListTeam_.length;
+	}
+	
+	public int getTeam(byte Player)
+	{
+		for (int i=0 ; i<_ListTeam_.length ; i++) // Pour chaque equipe
+		{
+			for (int l=0 ; l<_ListTeam_[i].length ; l++) // Pour chaque joueur
+			{
+				if (_ListTeam_[i][l] == Player)
+				{
+					return i;
+				}
+			}
+		}
+		return -1; // pas trouve
+	}
 	
 	//	|Setter
 	

@@ -64,7 +64,7 @@ public class __Melee_Unit__ extends __Unit__
 	
 	public void upChronometreForAttackSpeed()
 	{
-		_Chronometre_ = (int) ((_Chronometre_ + (_AttackSpeed_*30)) % 1000);
+		_Chronometre_ = (int) ((_Chronometre_ + (_AttackSpeed_*30)) % 10000);
 	}
 	
 }

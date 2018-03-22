@@ -22,8 +22,8 @@ public class __Tile__ {
 	protected __Entity__ _Actionner_; // Un bâtiment notamment, produisant des unités par exemple
 	// Empêche un Actionnist d'une autre équipe
 	
-	protected boolean _FogOfWar_;
-	// Si il y a du brouillard de guerre ou non
+	protected boolean[] _FogOfWar_;
+	// Si il y a du brouillard de guerre ou non, pour chaque equipe
 	
 	//		- Instances de classe -
 	
@@ -54,7 +54,7 @@ public class __Tile__ {
 	
 	//		- Methodes -
 	
-	public void initializeObject(String FormeTile) // Place les objets avec un String sous la forme <Background>,<Wall>,<Actionnist>:<Team>,<Actionner>:<Team>
+	public void initializeObject(String FormeTile, int NombreEquipe) // Place les objets avec un String sous la forme <Background>,<Wall>,<Actionnist>:<Team>,<Actionner>:<Team>
 	{
 		// Récupère chaque objet individuellement
 		String[] ListeObjet = FormeTile.split(",");
@@ -75,10 +75,14 @@ public class __Tile__ {
 		_Actionner_.setTeam(Integer.valueOf(ListeObjet_Actionner[1]));}
 		
 		// Initialisation du brouillard de guerre
-		_FogOfWar_ = false;
+		_FogOfWar_ = new boolean[NombreEquipe];
+		for (int i=0 ; i<NombreEquipe ; i++)
+		{
+			_FogOfWar_[i] = false;
+		}
 	}
 	
-	public void displayTexture(int PositionX, int PositionY)
+	public void displayTexture(int PositionX, int PositionY, byte TeamToSee)
 	{
 		if (_Background_ != null)
 		{
@@ -88,7 +92,7 @@ public class __Tile__ {
 		{
 			Gastc.display(__List_Object__.takeTextureUnit(_Wall_.getName()), PositionX, PositionY);
 		}
-		if (!_FogOfWar_) // Sans brouillard de guerre
+		if (!_FogOfWar_[TeamToSee]) // Sans brouillard de guerre
 		{
 			if (_Actionner_ != null)
 			{
@@ -139,14 +143,24 @@ public class __Tile__ {
 		return _Actionner_;
 	}
 	
+	public boolean actionnistIsWorker()
+	{
+		return (_Actionnist_ instanceof __Worker_Unit__);
+	}
+	
+	public boolean actionnistIsScout()
+	{
+		return (_Actionnist_ instanceof __Scout_Unit__);
+	}
+	
 	public boolean actionnerIsDefenceBuild()
 	{
 		return (_Actionner_ instanceof __Defence_Build__);
 	}
 	
-	public boolean isInFog()
+	public boolean isInFog(int Equipe)
 	{
-		return _FogOfWar_;
+		return _FogOfWar_[Equipe];
 	}
 	
 	//	|Setter
@@ -171,9 +185,9 @@ public class __Tile__ {
 		_Actionner_ = Object;
 	}
 	
-	public void setFog(boolean Fog)
+	public void setFog(boolean Fog, int Equipe)
 	{
-		_FogOfWar_ = Fog;
+		_FogOfWar_[Equipe] = Fog;
 	}
 	
 }

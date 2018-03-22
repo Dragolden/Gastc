@@ -51,7 +51,7 @@ public class __Map__ {
 			for (int x=0 ; x<SizeMap[0] ; x++)
 			{
 				_ListeTile_[y][x] = new __Tile__();
-				_ListeTile_[y][x].initializeObject(ListeCase[y][x]);
+				_ListeTile_[y][x].initializeObject(ListeCase[y][x], _ListTeam_.getAmountTeam());
 			}
 		}
 	}
@@ -66,13 +66,13 @@ public class __Map__ {
 	
 	//		- Methodes -
 	
-	public void displayTexture()
+	public void displayTexture(byte TeamToSee)
 	{
 		for (int y=0 ; y<sizeY() ; y++)
 		{
 			for (int x=0 ; x<sizeX() ; x++)
 			{
-				_ListeTile_[y][x].displayTexture(x*40+20, 680-y*40-60);
+				_ListeTile_[y][x].displayTexture(x*40+20, 680-y*40-60, TeamToSee);
 			}
 		}
 	}
@@ -217,7 +217,7 @@ public class __Map__ {
 		{
 			for (int i=0 ; i<sizeX() ; i++)
 			{
-				if (!_ListeTile_[l][i].isInFog() || (_ListeTile_[l][i].getActionner() != null && _ListeTile_[l][i].getActionner().isPreventDefeat()))
+				if (!_ListeTile_[l][i].isInFog(_ListTeam_.getTeam(_ListeTile_[PositionY][PositionX].getActionnist().getTeam())) || (_ListeTile_[l][i].getActionner() != null && _ListeTile_[l][i].getActionner().isPreventDefeat()))
 				{
 					if (_ListeTile_[l][i].getActionner() != null)
 					{
@@ -268,7 +268,7 @@ public class __Map__ {
 		{
 			for (int i=0 ; i<sizeX() ; i++)
 			{
-				if (!_ListeTile_[l][i].isInFog() || (_ListeTile_[l][i].getActionner() != null && _ListeTile_[l][i].getActionner().isPreventDefeat()))
+				if (!_ListeTile_[l][i].isInFog(_ListTeam_.getTeam(_ListeTile_[PositionY][PositionX].getActionner().getTeam())) || (_ListeTile_[l][i].getActionner() != null && _ListeTile_[l][i].getActionner().isPreventDefeat()))
 				{
 					if (_ListeTile_[l][i].getActionner() != null)
 					{
@@ -324,6 +324,7 @@ public class __Map__ {
 			}
 			else // ne peut pas attaquer
 			{
+				
 				byte Superieur = 1; // y
 				if  (Math.abs(PositionEnnemi[0] - PositionUnitX) >= Math.abs(PositionEnnemi[1] - PositionUnitY))
 				{
@@ -338,6 +339,17 @@ public class __Map__ {
 		            	{
 		            		moveRight(PositionUnitX, PositionUnitY);
 		            	}
+		            	
+		            	// Autre direction si bloque
+		            	else if (_ListeTile_[PositionUnitY+1][PositionUnitX].getActionnist() == null && _ListeTile_[PositionUnitY+1][PositionUnitX].getWall() == null)
+		            	{
+	                		moveDown(PositionUnitX, PositionUnitY);
+		            	}
+		            	else if (_ListeTile_[PositionUnitY-1][PositionUnitX].getActionnist() == null && _ListeTile_[PositionUnitY-1][PositionUnitX].getWall() == null)
+		            	{
+	                		moveUp(PositionUnitX, PositionUnitY);
+		            	}
+		            		
 		            }
 		            else
 		            {
@@ -347,6 +359,17 @@ public class __Map__ {
 			            	{
 		                		moveDown(PositionUnitX, PositionUnitY);
 			            	}
+		                	
+		                	// Autre direction si bloque
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX+1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX+1].getWall() == null)
+			            	{
+			            		moveRight(PositionUnitX, PositionUnitY);
+			            	}
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX-1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX-1].getWall() == null)
+			            	{
+			        			moveLeft(PositionUnitX, PositionUnitY);
+			            	}
+		                	
 		                }
 		                else // Haut
 		                {
@@ -354,6 +377,17 @@ public class __Map__ {
 			            	{
 		                		moveUp(PositionUnitX, PositionUnitY);
 			            	}
+		                	
+		                	// Autre direction si bloque
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX+1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX+1].getWall() == null)
+			            	{
+			            		moveRight(PositionUnitX, PositionUnitY);
+			            	}
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX-1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX-1].getWall() == null)
+			            	{
+			        			moveLeft(PositionUnitX, PositionUnitY);
+			            	}
+		                	
 		                }
 		            }
 		        }
@@ -365,6 +399,17 @@ public class __Map__ {
 		            	{
 		        			moveLeft(PositionUnitX, PositionUnitY);
 		            	}
+		        		
+		        		// Autre direction si bloque
+		            	else if (_ListeTile_[PositionUnitY+1][PositionUnitX].getActionnist() == null && _ListeTile_[PositionUnitY+1][PositionUnitX].getWall() == null)
+		            	{
+	                		moveDown(PositionUnitX, PositionUnitY);
+		            	}
+		            	else if (_ListeTile_[PositionUnitY-1][PositionUnitX].getActionnist() == null && _ListeTile_[PositionUnitY-1][PositionUnitX].getWall() == null)
+		            	{
+	                		moveUp(PositionUnitX, PositionUnitY);
+		            	}
+		        		
 		            }
 		            else
 		            {
@@ -374,6 +419,17 @@ public class __Map__ {
 			            	{
 		                		moveDown(PositionUnitX, PositionUnitY); // Bas
 			            	}
+		                	
+		                	// Autre direction si bloque
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX+1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX+1].getWall() == null)
+			            	{
+			            		moveRight(PositionUnitX, PositionUnitY);
+			            	}
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX-1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX-1].getWall() == null)
+			            	{
+			        			moveLeft(PositionUnitX, PositionUnitY);
+			            	}
+		                	
 		                }
 		                else
 		                {
@@ -381,6 +437,17 @@ public class __Map__ {
 			            	{
 		                		moveUp(PositionUnitX, PositionUnitY); // Haut
 			            	}
+		                	
+		                	// Autre direction si bloque
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX+1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX+1].getWall() == null)
+			            	{
+			            		moveRight(PositionUnitX, PositionUnitY);
+			            	}
+			            	else if (_ListeTile_[PositionUnitY][PositionUnitX-1].getActionnist() == null && _ListeTile_[PositionUnitY][PositionUnitX-1].getWall() == null)
+			            	{
+			        			moveLeft(PositionUnitX, PositionUnitY);
+			            	}
+		                	
 		                }
 		            }
 		        }
@@ -411,10 +478,13 @@ public class __Map__ {
 			{
 				if (_ListeTile_[l][i].getActionnist() != null) // Deplacement offensif d'une unite
 				{
-					// On verifie si le chronometre est depasse avec une marge pour le retour a zero:
-					if (Gastc.getChronometre() >= _ListeTile_[l][i].getActionnist().getChronometre() && Math.abs(_ListeTile_[l][i].getActionnist().getChronometre() - Gastc.getChronometre()) < 5000)
+					if (!(_ListeTile_[l][i].actionnistIsWorker() || _ListeTile_[l][i].actionnistIsScout()))
 					{
-						offensiveMove(i, l);
+						// On verifie si le chronometre est depasse avec une marge pour le retour a zero:
+						if (Gastc.getChronometre() >= _ListeTile_[l][i].getActionnist().getChronometre() && Math.abs(_ListeTile_[l][i].getActionnist().getChronometre() - Gastc.getChronometre()) < 5000)
+						{
+							offensiveMove(i, l);
+						}
 					}
 				}
 				if (_ListeTile_[l][i].getActionner() != null) // Attaque d'un batiment
@@ -469,67 +539,71 @@ public class __Map__ {
 	
 	public void activateFog()
 	{
-		// On remet la carte cachee
-		for (int l=0 ; l<sizeY() ; l++) // pour
+		for (int Equipe=0 ; Equipe<_ListTeam_.getAmountTeam(); Equipe++) // Pour chaque equipe
 		{
-			for (int i=0 ; i<sizeX() ; i++) // chaque case
+			
+			// On remet la carte cachee
+			for (int l=0 ; l<sizeY() ; l++) // pour
 			{
-				_ListeTile_[l][i].setFog(true);
+				for (int i=0 ; i<sizeX() ; i++) // chaque case
+				{
+					_ListeTile_[l][i].setFog(true, Equipe);
+				}
 			}
-		}
-
-		// On met la vision pour les elements vus par les allies
-		short Vision;
-		for (int l=0 ; l<sizeY() ; l++) // pour
-		{
-			for (int i=0 ; i<sizeX() ; i++) // chaque case
+	
+			// On met la vision pour les elements vus par les allies
+			short Vision;
+			for (int l=0 ; l<sizeY() ; l++) // pour
 			{
-				
-				if (_ListeTile_[l][i].getActionnist() != null)
+				for (int i=0 ; i<sizeX() ; i++) // chaque case
 				{
-					if (_ListeTile_[l][i].getActionnist().getTeam() == 1 || _ListTeam_.areAlly((byte)1, _ListeTile_[l][i].getActionnist().getTeam()))
+					
+					if (_ListeTile_[l][i].getActionnist() != null)
 					{
-						Vision = _ListeTile_[l][i].getActionnist().getVision();
-						for (int k=-Vision ; k<Vision+1 ; k++)
+						if (_ListTeam_.isInTeam((byte)Equipe, _ListeTile_[l][i].getActionnist().getTeam()))
 						{
-							for (int j=-Vision ; j<Vision+1 ; j++)
+							Vision = _ListeTile_[l][i].getActionnist().getVision();
+							for (int k=-Vision ; k<Vision+1 ; k++)
 							{
-								// Pour ne pas se retrouver hors de l'ecran
-								if (l+k >= 0 && l+k < sizeY() && (i+j >= 0 && i+j < sizeX()))
+								for (int j=-Vision ; j<Vision+1 ; j++)
 								{
-									// On enleve les coins
-									if (!((k==-Vision && j==-Vision) || (k==Vision && j==-Vision) || (k==-Vision && j==Vision) || (k==Vision && j==Vision)))
+									// Pour ne pas se retrouver hors de l'ecran
+									if (l+k >= 0 && l+k < sizeY() && (i+j >= 0 && i+j < sizeX()))
 									{
-										_ListeTile_[l+k][i+j].setFog(false);
+										// On enleve les coins
+										if (!((k==-Vision && j==-Vision) || (k==Vision && j==-Vision) || (k==-Vision && j==Vision) || (k==Vision && j==Vision)))
+										{
+											_ListeTile_[l+k][i+j].setFog(false, Equipe);
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-				if (_ListeTile_[l][i].getActionner() != null)
-				{
-					if (_ListeTile_[l][i].getActionner().getTeam() == 1 || _ListTeam_.areAlly((byte)1, _ListeTile_[l][i].getActionner().getTeam()))
+					if (_ListeTile_[l][i].getActionner() != null)
 					{
-						Vision = _ListeTile_[l][i].getActionner().getVision();
-						for (int k=-Vision ; k<Vision+1 ; k++)
+						if (_ListTeam_.isInTeam((byte)Equipe, _ListeTile_[l][i].getActionner().getTeam()))
 						{
-							for (int j=-Vision ; j<Vision+1 ; j++)
+							Vision = _ListeTile_[l][i].getActionner().getVision();
+							for (int k=-Vision ; k<Vision+1 ; k++)
 							{
-								// Pour ne pas se retrouver hors de l'ecran
-								if (l+k >= 0 && l+k < sizeY() && (i+j >= 0 && i+j < sizeX()))
+								for (int j=-Vision ; j<Vision+1 ; j++)
 								{
-									// On enleve les coins
-									if (!((k==-Vision && j==-Vision) || (k==Vision && j==-Vision) || (k==-Vision && j==Vision) || (k==Vision && j==Vision)))
+									// Pour ne pas se retrouver hors de l'ecran
+									if (l+k >= 0 && l+k < sizeY() && (i+j >= 0 && i+j < sizeX()))
 									{
-										_ListeTile_[l+k][i+j].setFog(false);
+										// On enleve les coins
+										if (!((k==-Vision && j==-Vision) || (k==Vision && j==-Vision) || (k==-Vision && j==Vision) || (k==Vision && j==Vision)))
+										{
+											_ListeTile_[l+k][i+j].setFog(false, Equipe);
+										}
 									}
 								}
 							}
 						}
 					}
+					
 				}
-				
 			}
 		}
 	}

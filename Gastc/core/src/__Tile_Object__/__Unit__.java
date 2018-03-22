@@ -50,7 +50,7 @@ abstract public class __Unit__ extends __Entity__
 	
 	public void upChronometreForSpeed()
 	{
-		_Chronometre_ = (int) ((_Chronometre_ + (_Speed_*30)) % 1000);
+		_Chronometre_ = (int) ((_Chronometre_ + (_Speed_*30)) % 10000);
 	}
 	
 }

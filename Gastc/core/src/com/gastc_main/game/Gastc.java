@@ -33,6 +33,7 @@ public class Gastc extends ApplicationAdapter {
 	// 0 : wait
 	// 1 : menu
 	// 2 : in a map
+	protected static byte _TeamToSee_; // L'equipe qui sera affichee sur la carte
 	protected static boolean _Pause_;
 	protected static int _Chronometre_;
 	protected int _PositionSourisX_;
@@ -55,6 +56,7 @@ public class Gastc extends ApplicationAdapter {
 		BUTTON_QUIT = new Texture("pictures/others/button_quit.png");
 		
 		_ActualVision_ = 1;
+		_TeamToSee_ = 0;
 		_Pause_ = false;
 		_Chronometre_ = 0;
 		_PositionSourisX_ = 0;
@@ -136,7 +138,7 @@ public class Gastc extends ApplicationAdapter {
 	public void mapEffect()
 	{
 		// objets:
-		_ActualMap_.displayTexture();
+		_ActualMap_.displayTexture(_TeamToSee_);
 		
 		// cases:
 		for (int i=0 ; i<_ActualMap_.sizeY(); i++)
@@ -214,7 +216,7 @@ public class Gastc extends ApplicationAdapter {
 		_DecalageY_ = 0;
 		
 		__List_Object__.initialiser(); // On met les objets dans leur liste	
-		_ActualMap_ = new __Map__("test"); // On initialise la carte de test
+		_ActualMap_ = new __Map__("test2"); // On initialise la carte de test
 
 		_ActualVision_ = 2; // in a map
 	}

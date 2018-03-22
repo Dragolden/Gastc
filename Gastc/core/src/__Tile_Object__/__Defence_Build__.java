@@ -64,7 +64,7 @@ public class __Defence_Build__ extends __Build__
 	
 	public void upChronometreForAttackSpeed()
 	{
-		_Chronometre_ = (int) ((_Chronometre_ + (_AttackSpeed_*30)) % 1000);
+		_Chronometre_ = (int) ((_Chronometre_ + (_AttackSpeed_*30)) % 10000);
 	}
 
 }
